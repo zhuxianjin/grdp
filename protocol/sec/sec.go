@@ -731,7 +731,8 @@ func (c *Client) sendClientNewLicenseRequest(data []byte) {
 		sc = c.ServerSecurityData().ServerCertificate
 	} else {
 		rd := bytes.NewReader(req.ServerCertificate.BlobData)
-		err := sc.Unpack(rd)
+		//err := sc.Unpack(rd)
+		err := struc.Unpack(rd, &req)
 		if err != nil {
 			glog.Error(err)
 			return
