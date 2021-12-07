@@ -3,7 +3,6 @@ package core
 import (
 	"encoding/binary"
 	"io"
-	"unicode/utf16"
 )
 
 type ReadBytesComplete func(result []byte, err error)
@@ -129,17 +128,5 @@ func RGB565ToRGB(data uint16) (r, g, b uint8) {
 	b = uint8(uint32(data&0x001F)) << 3
 
 	return
-}
-
-func UnicodeEncode(p string) []byte {
-	return convertUTF16ToLittleEndianBytes(utf16.Encode([]rune(p)))
-}
-
-func convertUTF16ToLittleEndianBytes(u []uint16) []byte {
-	b := make([]byte, 2*len(u))
-	for index, value := range u {
-		binary.LittleEndian.PutUint16(b[index*2:], value)
-	}
-	return b
 }
 
