@@ -8,6 +8,14 @@ import (
 type ReadBytesComplete func(result []byte, err error)
 
 func StartReadBytes(len int, r io.Reader, cb ReadBytesComplete) {
+	// 防止 len < 0 导致崩溃
+	defer func() {
+		if r := recover(); nil != r {
+			err := fmt.Errorf("%v", r)
+			fmt.Println(err)
+			return
+		}
+	}()
 	b := make([]byte, len)
 	go func() {
 		_, err := io.ReadFull(r, b)
