@@ -2,6 +2,7 @@ package core
 
 import (
 	"encoding/binary"
+	"fmt"
 	"io"
 )
 
@@ -13,7 +14,6 @@ func StartReadBytes(len int, r io.Reader, cb ReadBytesComplete) {
 		if r := recover(); nil != r {
 			err := fmt.Errorf("%v", r)
 			fmt.Println(err)
-			return
 		}
 	}()
 	b := make([]byte, len)
